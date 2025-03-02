@@ -1,6 +1,7 @@
 import random
 import sys
-import urllib
+import urllib.request
+import cowsay
 
 from typing import List, Tuple, Callable
 
@@ -14,7 +15,7 @@ def gameplay(ask: Callable[[str, List[str]], str], inform: Callable[[str, int, i
     atts = 0
 
     while True:
-        guess = ask("Введите слово: ")
+        guess = ask
         atts += 1
 
         bulls, cows = bullscows(guess, secret)
@@ -24,10 +25,14 @@ def gameplay(ask: Callable[[str, List[str]], str], inform: Callable[[str, int, i
             return atts
 
 def ask(prompt: str, valid: List[str] = None) -> str:
-    return input(prompt)
+    rand_cow = cowsay.get_random_cow()
+    print(cowsay.cowsay(prompt, cow=rand_cow))
+    return input()
 
 def inform(form_str: str, bulls: int, cows: int) -> None:
-    print(form_str.format(bulls, cows))
+    random_cow = cowsay.get_random_cow()
+    cowsay.cowsay(form_str.format(bulls, cows), cow=random_cow)
+
 
 def load_words(source: str, length: int = 5) -> List[str]:
     if source.startswith(("http://", "https://")):
