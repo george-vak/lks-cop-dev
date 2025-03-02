@@ -25,13 +25,14 @@ def gameplay(ask: Callable[[str, List[str]], str], inform: Callable[[str, int, i
             return atts
 
 def ask(prompt: str, valid: List[str] = None) -> str:
-    rand_cow = cowsay.get_random_cow()
-    print(cowsay.cowsay(prompt, cow=rand_cow))
-    return input()
-
+    with open("custom.cow", "r") as cow_file:
+        custom_cow = cowsay.read_dot_cow(cow_file)
+    print(cowsay.cowsay(prompt, cowfile=custom_cow))
+    
 def inform(form_str: str, bulls: int, cows: int) -> None:
-    random_cow = cowsay.get_random_cow()
-    cowsay.cowsay(form_str.format(bulls, cows), cow=random_cow)
+    with open("custom.cow", "r") as cow_file:
+        custom_cow = cowsay.read_dot_cow(cow_file)
+    cowsay.cowsay(form_str.format(bulls, cows), cowfile=custom_cow)
 
 
 def load_words(source: str, length: int = 5) -> List[str]:
